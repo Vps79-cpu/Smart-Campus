@@ -168,7 +168,7 @@ export default function SmartCampusLabWebsite() {
   const feeTotal = Number(tuition) + Number(hostel) + Number(transport);
   const result = gradeFromScore(Number(score));
   const calculateGrade = async () => {
-  const response = await fetch("http://127.0.0.1:5000/grade", {
+  const response = await fetch("https://smart-campus-backend-wprf.onrender.com/grade", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
