@@ -28,7 +28,7 @@ const Input = (props) => (
 
 const Textarea = (props) => (
   <textarea
-    className="w-full rounded-xl border p-3 text-white"
+    className="w-full rounded-xl border p-3 text-black"
     {...props}
   />
 );
@@ -204,18 +204,18 @@ export default function SmartCampusLabWebsite() {
   Calculate Grade
 </Button>
 {backendResult && (
-  <div className="mt-4 rounded-xl bg-white/10 p-4">
-    <p>Name: {backendResult.name}</p>
-    <p>Score: {backendResult.score}</p>
-    <p>Grade: {backendResult.grade}</p>
-    <p>Remark: {backendResult.remark}</p>
-  </div>
+  <div className="rounded-2xl bg-slate-50 p-4 text-sm text-black">
+  <p className="text-black">Name: {backendResult.name}</p>
+  <p className="text-black">Score: {backendResult.score}</p>
+  <p className="text-black">Grade: {backendResult.grade}</p>
+  <p className="text-black">Remark: {backendResult.remark}</p>
+</div>
 )}
               </CardHeader>
               <CardContent className="space-y-4">
                 <Input value={name} onChange={(e) => setName(e.target.value)} placeholder="Student name" />
                 <Input type="number" value={score} onChange={(e) => setScore(e.target.value)} placeholder="Score" />
-                <div className="rounded-2xl bg-slate-50 p-4 text-sm">
+                <div className="rounded-2xl bg-slate-50 p-4 text-black">
                   <div><b>Name:</b> {name}</div>
                   <div><b>Score:</b> {score}</div>
                   <div><b>Grade:</b> {result.grade}</div>
@@ -272,16 +272,21 @@ export default function SmartCampusLabWebsite() {
             <CardHeader><CardTitle>Student Records & Event Analysis</CardTitle></CardHeader>
             <CardContent className="space-y-4">
               {studentRecords.map((s) => (
-                <div key={s.name} className="rounded-2xl border p-4 text-sm">
+                <div key={s.name} className="rounded-2xl border p-4 text-white">
                   <div><b>Name:</b> {s.name}</div>
                   <div><b>Age:</b> {s.age}</div>
                   <div><b>Grades:</b> {s.grades.join(", ")}</div>
                 </div>
               ))}
-              <div className="rounded-2xl bg-slate-50 p-4 text-sm">
-                Common participants: Rahul, Anita<br />
-                All participants: Priya, Rahul, Anita, Kiran, Sneha
-              </div>
+              <div className="rounded-2xl bg-slate-800 p-4 text-sm text-black border border-white/10">
+  <span className="text-white">
+    Common participants: Rahul, Anita
+  </span>
+  <br />
+  <span className="text-white">
+    All participants: Priya, Rahul, Anita, Kiran, Sneha
+  </span>
+</div>
             </CardContent>
           </Card>
         );
@@ -290,7 +295,7 @@ export default function SmartCampusLabWebsite() {
           <Card className="rounded-3xl shadow-lg border-none">
             <CardHeader><CardTitle>Sorting & Searching</CardTitle></CardHeader>
             <CardContent className="space-y-4">
-              <div className="rounded-2xl bg-slate-50 p-4 text-sm"><b>Sorted IDs:</b> {sortedIds.join(", ")}</div>
+              <div className="rounded-2xl bg-slate-50 p-4 text-black"><b>Sorted IDs:</b> {sortedIds.join(", ")}</div>
               <Input type="number" value={searchId} onChange={(e) => setSearchId(e.target.value)} placeholder="Search ID" />
               <div className="grid gap-3 md:grid-cols-2 text-sm">
                 <div className="rounded-2xl border p-4">Linear search: {linearFound >= 0 ? `Found at index ${linearFound}` : "Not found"}</div>
@@ -307,7 +312,7 @@ export default function SmartCampusLabWebsite() {
               <Input type="number" value={tuition} onChange={(e) => setTuition(e.target.value)} placeholder="Tuition" />
               <Input type="number" value={hostel} onChange={(e) => setHostel(e.target.value)} placeholder="Hostel" />
               <Input type="number" value={transport} onChange={(e) => setTransport(e.target.value)} placeholder="Transport" />
-              <div className="md:col-span-3 rounded-2xl bg-slate-50 p-4 text-sm">
+              <div className="md:col-span-3 rounded-2xl bg-slate-50 p-4 text-black">
                 <b>Total fee:</b> {feeTotal}
               </div>
             </CardContent>
@@ -315,14 +320,14 @@ export default function SmartCampusLabWebsite() {
         );
       case 6:
         return (
-          <Card className="rounded-3xl shadow-lg border-none">
+          <Card className="rounded-3xl shadow-lg border-white">
             <CardHeader><CardTitle>File Records Summary</CardTitle></CardHeader>
-            <CardContent className="space-y-3 text-sm">
-              <div className="rounded-2xl border p-4">ID, Name, Marks</div>
-              <div className="rounded-2xl border p-4">101, Arjun, 85</div>
-              <div className="rounded-2xl border p-4">102, Meera, 92</div>
-              <div className="rounded-2xl border p-4">103, Ravi, 76</div>
-              <div className="rounded-2xl bg-slate-50 p-4">
+            <CardContent className="space-y-3 text-white">
+              <div className="rounded-2xl border p-4 text-white">ID, Name, Marks</div>
+              <div className="rounded-2xl border p-4 text-white">101, Arjun, 85</div>
+              <div className="rounded-2xl border p-4 text-white">102, Meera, 92</div>
+              <div className="rounded-2xl border p-4 text-white">103, Ravi, 76</div>
+              <div className="rounded-2xl bg-slate-50 p-4 text-black">
                 Total Students: 4<br />Average Marks: 85.5<br />Top Student: Meera
               </div>
             </CardContent>
@@ -332,9 +337,9 @@ export default function SmartCampusLabWebsite() {
         return (
           <Card className="rounded-3xl shadow-lg border-none">
             <CardHeader><CardTitle>Directory Scanner</CardTitle></CardHeader>
-            <CardContent className="space-y-3 text-sm">
+            <CardContent className="space-y-3 text-black">
               <Input placeholder="Enter directory path" defaultValue="Projects/" />
-              <div className="rounded-2xl border p-4 font-mono whitespace-pre-line">Projects/\n  Student1/\n    report.docx\n  Student2/\n    code.py\n  EmptyFolder/</div>
+              <div className="rounded-2xl border p-4 text-white font-mono whitespace-pre-line">Projects/\n  Student1/\n    report.docx\n  Student2/\n    code.py\n  EmptyFolder/ text-white</div>
               <div className="rounded-2xl bg-red-50 p-4">Custom Error: Empty folder detected: Projects/EmptyFolder</div>
             </CardContent>
           </Card>
@@ -343,10 +348,10 @@ export default function SmartCampusLabWebsite() {
         return (
           <Card className="rounded-3xl shadow-lg border-none">
             <CardHeader><CardTitle>Performance Analytics</CardTitle></CardHeader>
-            <CardContent className="space-y-3 text-sm">
-              <div className="rounded-2xl border p-4">Mean scores: Math 84, Science 89, English 86</div>
-              <div className="rounded-2xl border p-4">Top performers: Math - Anita, Science - Anita, English - Anita</div>
-              <div className="rounded-2xl bg-slate-50 p-4">Charts can be added here using a chart library like Recharts or Chart.js.</div>
+            <CardContent className="space-y-3 text-white">
+              <div className="rounded-2xl border p-4 text-white">Mean scores: Math 84, Science 89, English 86</div>
+              <div className="rounded-2xl border p-4 text-white">Top performers: Math - Anita, Science - Anita, English - Anita</div>
+              <div className="rounded-2xl bg-slate-50 p-4 text-black">Charts can be added here using a chart library like Recharts or Chart.js.</div>
             </CardContent>
           </Card>
         );
@@ -354,10 +359,10 @@ export default function SmartCampusLabWebsite() {
         return (
           <Card className="rounded-3xl shadow-lg border-none">
             <CardHeader><CardTitle>Smart Campus Integration</CardTitle></CardHeader>
-            <CardContent className="space-y-3 text-sm">
-              <div className="rounded-2xl border p-4">All 8 lab modules are linked from one dashboard.</div>
-              <div className="rounded-2xl border p-4">Choose any program from the left panel and run it instantly.</div>
-              <div className="rounded-2xl border p-4">This is ideal for class presentation and mini-project demo.</div>
+            <CardContent className="space-y-3 ">
+              <div className="rounded-2xl border p-4 ">All 8 lab modules are linked from one dashboard.</div>
+              <div className="rounded-2xl border p-4 ">Choose any program from the left panel and run it instantly.</div>
+              <div className="rounded-2xl border p-4 ">This is ideal for class presentation and mini-project demo.</div>
             </CardContent>
           </Card>
         );
