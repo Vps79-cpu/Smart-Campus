@@ -1,142 +1,5 @@
 import React, { useMemo, useState } from "react";
-const Card = ({ children, className = "" }) => (
-  <div className={className}>{children}</div>
-);
-
-const CardHeader = ({ children }) => <div>{children}</div>;
-
-const CardTitle = ({ children }) => (
-  <h2 className="text-xl font-bold">{children}</h2>
-);
-
-const CardContent = ({ children, className = "" }) => (
-  <div className={className}>{children}</div>
-);
-
-const Button = ({ children, className = "", ...props }) => (
-  <button className={className} {...props}>
-    {children}
-  </button>
-);
-
-const Input = (props) => (
-  <input
-    className="w-full rounded-xl border p-3 text-white"
-    {...props}
-  />
-);
-
-const Textarea = (props) => (
-  <textarea
-    className="w-full rounded-xl border p-3 text-black"
-    {...props}
-  />
-);
-
-const Badge = ({ children, className = "" }) => (
-  <span className={`rounded-full bg-white/20 px-3 py-1 text-xs ${className}`}>
-    {children}
-  </span>
-);
-
-const Separator = ({ className = "" }) => (
-  <div className={`h-px w-full bg-white/10 ${className}`} />
-);
-import {
-  BookOpen,
-  UserRound,
-  Layers3,
-  Search,
-  Calculator,
-  FileText,
-  FolderOpen,
-  ChartNoAxesCombined,
-  ArrowRight,
-  Play,
-  Sparkles,
-  ChevronRight,
-  CircleCheck,
-  ScrollText,
-} from "lucide-react";
-
-const modules = [
-  {
-    id: 1,
-    title: "Student Registration & Grade Evaluation",
-    icon: UserRound,
-    summary: "Enter a name and score to get grade and remarks.",
-    color: "from-sky-500 to-cyan-400",
-  },
-  {
-    id: 2,
-    title: "Course Enrollment Management",
-    icon: BookOpen,
-    summary: "Add courses with credits and skip invalid entries.",
-    color: "from-violet-500 to-fuchsia-400",
-  },
-  {
-    id: 3,
-    title: "Student Record Management",
-    icon: Layers3,
-    summary: "Store student details using lists, dictionaries, and sets.",
-    color: "from-emerald-500 to-teal-400",
-  },
-  {
-    id: 4,
-    title: "Sorting & Searching Student IDs",
-    icon: Search,
-    summary: "Sort IDs and search using linear / binary search.",
-    color: "from-amber-500 to-orange-400",
-  },
-  {
-    id: 5,
-    title: "Fee Calculation using Functions",
-    icon: Calculator,
-    summary: "Calculate total fee with optional hostel and transport.",
-    color: "from-rose-500 to-pink-400",
-  },
-  {
-    id: 6,
-    title: "File Handling for Academic Records",
-    icon: FileText,
-    summary: "Write, read, and summarize student records from a file.",
-    color: "from-indigo-500 to-blue-400",
-  },
-  {
-    id: 7,
-    title: "Directory Scanning & Exceptions",
-    icon: FolderOpen,
-    summary: "Display folder structure and show custom errors.",
-    color: "from-lime-500 to-green-400",
-  },
-  {
-    id: 8,
-    title: "Performance Analytics",
-    icon: ChartNoAxesCombined,
-    summary: "Show statistics and charts for student scores.",
-    color: "from-cyan-500 to-sky-400",
-  },
-  {
-    id: 9,
-    title: "Smart Campus Integration",
-    icon: Sparkles,
-    summary: "Run all modules from one modern dashboard.",
-    color: "from-purple-500 to-pink-400",
-  },
-  {
-    id: 10,
-    title: "Project Guide Page",
-    icon: ScrollText,
-    summary: "Use the website as a final lab presentation page.",
-    color: "from-slate-600 to-slate-400",
-  },
-];
-
-const sampleStudents = [
-  { name: "Priya", score: 82, age: 20, grades: [85, 90, 78] },
-  { name: "Rahul", score: 71, age: 21, grades: [72, 88, 91] },
-  { name: "Anita", score: 95, age: 19, grades: [95, 89, 92] },
-];
+import "./App.css";
 
 function gradeFromScore(score) {
   if (score >= 90) return { grade: "A", remark: "Excellent" };
@@ -146,330 +9,661 @@ function gradeFromScore(score) {
   return { grade: "F", remark: "Needs Improvement" };
 }
 
-export default function SmartCampusLabWebsite() {
+export default function App() {
   const [selected, setSelected] = useState(1);
+
   const [name, setName] = useState("Priya");
   const [score, setScore] = useState(82);
+  const [backendResult, setBackendResult] = useState(null);
+
   const [courseName, setCourseName] = useState("");
   const [credits, setCredits] = useState(4);
+
   const [courses, setCourses] = useState([
     { course: "Mathematics", credits: 4 },
     { course: "Physics", credits: 3 },
   ]);
+
   const [searchId, setSearchId] = useState(108);
+
   const [tuition, setTuition] = useState(50000);
   const [hostel, setHostel] = useState(30000);
   const [transport, setTransport] = useState(10000);
-  const [studentRecords] = useState(sampleStudents);
-  const [backendResult, setBackendResult] = useState(null);
-  const sortedIds = useMemo(() => [101, 102, 105, 108, 110, 115], []);
-  const linearFound = sortedIds.indexOf(Number(searchId));
-  const binaryFound = sortedIds.indexOf(Number(searchId));
-  const feeTotal = Number(tuition) + Number(hostel) + Number(transport);
-  const result = gradeFromScore(Number(score));
-  const calculateGrade = async () => {
-  const response = await fetch("https://smart-campus-backend-wprf.onrender.com/grade", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      name,
-      score,
-    }),
-  });
 
-  const data = await response.json();
-  setBackendResult(data);
-};
-  function addCourse() {
-    if (!courseName.trim() || Number(credits) <= 0) return;
-    setCourses((prev) => [...prev, { course: courseName.trim(), credits: Number(credits) }]);
+  const sortedIds = useMemo(() => [101, 102, 105, 108, 110, 115], []);
+
+  const linearFound = sortedIds.indexOf(Number(searchId));
+
+  const feeTotal =
+    Number(tuition) + Number(hostel) + Number(transport);
+
+  const studentRecords = [
+    {
+      name: "Priya",
+      age: 20,
+      grades: [85, 90, 78],
+    },
+    {
+      name: "Rahul",
+      age: 21,
+      grades: [72, 88, 91],
+    },
+    {
+      name: "Anita",
+      age: 19,
+      grades: [95, 89, 92],
+    },
+  ];
+
+  const result = gradeFromScore(Number(score));
+
+  const calculateGrade = async () => {
+    try {
+      const response = await fetch(
+        "https://smart-campus-backend-wprf.onrender.com/grade",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name,
+            score,
+          }),
+        }
+      );
+
+      const data = await response.json();
+      setBackendResult(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const addCourse = () => {
+    if (!courseName.trim()) return;
+
+    setCourses([
+      ...courses,
+      {
+        course: courseName,
+        credits,
+      },
+    ]);
+
     setCourseName("");
     setCredits(4);
-  }
+  };
 
   const renderModule = () => {
     switch (selected) {
       case 1:
         return (
-          <div className="grid gap-4 md:grid-cols-2">
-            <Card className="rounded-3xl shadow-lg border-none">
-              <CardHeader>
-                <CardTitle>Grade Evaluator</CardTitle>
-                <Button
-  onClick={calculateGrade}
-  className="mt-4 rounded-xl bg-blue-500 px-4 py-2 text-white"
->
-  Calculate Grade
-</Button>
-{backendResult && (
-  <div className="rounded-2xl bg-slate-50 p-4 text-sm text-black">
-  <p className="text-black">Name: {backendResult.name}</p>
-  <p className="text-black">Score: {backendResult.score}</p>
-  <p className="text-black">Grade: {backendResult.grade}</p>
-  <p className="text-black">Remark: {backendResult.remark}</p>
-</div>
-)}
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <Input value={name} onChange={(e) => setName(e.target.value)} placeholder="Student name" />
-                <Input type="number" value={score} onChange={(e) => setScore(e.target.value)} placeholder="Score" />
-                <div className="rounded-2xl bg-slate-50 p-4 text-black">
-                  <div><b>Name:</b> {name}</div>
-                  <div><b>Score:</b> {score}</div>
-                  <div><b>Grade:</b> {result.grade}</div>
-                  <div><b>Remark:</b> {result.remark}</div>
-                </div>
-              </CardContent>
-            </Card>
-            <Card className="rounded-3xl shadow-lg border-none">
-              <CardHeader>
-                <CardTitle>Grade Rules</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-2 text-sm">
-                {[
-                  ["90-100", "A", "Excellent"],
-                  ["75-89", "B", "Very Good"],
-                  ["60-74", "C", "Good"],
-                  ["40-59", "D", "Average"],
-                  ["Below 40", "F", "Needs Improvement"],
-                ].map(([r, g, rem]) => (
-                  <div key={r} className="flex items-center justify-between rounded-2xl border p-3">
-                    <span>{r}</span><Badge>{g}</Badge><span>{rem}</span>
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
+          <div className="content-card">
+            <h2>Grade Evaluator</h2>
+
+            <button className="primary-btn" onClick={calculateGrade}>
+              Calculate Grade
+            </button>
+
+            <input
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Enter Name"
+            />
+
+            <input
+              value={score}
+              onChange={(e) => setScore(e.target.value)}
+              placeholder="Enter Score"
+              type="number"
+            />
+
+            <div className="output-box black-text">
+              <p>Name: {backendResult?.name || name}</p>
+              <p>Score: {backendResult?.score || score}</p>
+              <p>
+                Grade: {backendResult?.grade || result.grade}
+              </p>
+              <p>
+                Remark: {backendResult?.remark || result.remark}
+              </p>
+            </div>
+
+            <div className="rules-box">
+              <h2>Grade Rules</h2>
+
+              <div className="rule-row">
+                <span>90-100</span>
+                <span>A</span>
+                <span>Excellent</span>
+              </div>
+
+              <div className="rule-row">
+                <span>75-89</span>
+                <span>B</span>
+                <span>Very Good</span>
+              </div>
+
+              <div className="rule-row">
+                <span>60-74</span>
+                <span>C</span>
+                <span>Good</span>
+              </div>
+
+              <div className="rule-row">
+                <span>40-59</span>
+                <span>D</span>
+                <span>Average</span>
+              </div>
+
+              <div className="rule-row">
+                <span>Below 40</span>
+                <span>F</span>
+                <span>Needs Improvement</span>
+              </div>
+            </div>
           </div>
         );
+
       case 2:
         return (
-          <Card className="rounded-3xl shadow-lg border-none">
-            <CardHeader>
-              <CardTitle>Course Enrollment</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid gap-3 md:grid-cols-[1fr_160px_auto]">
-                <Input value={courseName} onChange={(e) => setCourseName(e.target.value)} placeholder="Course name" />
-                <Input type="number" value={credits} onChange={(e) => setCredits(e.target.value)} placeholder="Credits" />
-                <Button onClick={addCourse}><Play className="mr-2 h-4 w-4" />Add Course</Button>
+          <div className="content-card">
+            <h2>Course Enrollment</h2>
+
+            <input
+              value={courseName}
+              onChange={(e) => setCourseName(e.target.value)}
+              placeholder="Course Name"
+            />
+
+            <input
+              value={credits}
+              onChange={(e) => setCredits(e.target.value)}
+              type="number"
+              placeholder="Credits"
+            />
+
+            <button className="primary-btn" onClick={addCourse}>
+              Add Course
+            </button>
+
+            {courses.map((c, index) => (
+              <div className="dark-box" key={index}>
+                <p>Course: {c.course}</p>
+                <p>Credits: {c.credits}</p>
               </div>
-              <div className="space-y-2">
-                {courses.map((c, idx) => (
-                  <div key={idx} className="flex items-center justify-between rounded-2xl border p-3">
-                    <span>{c.course}</span>
-                    <Badge variant="secondary">{c.credits} credits</Badge>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+            ))}
+            <div className="output-box black-text">
+  <p>Total Courses Added: {courses.length}</p>
+</div>
+          </div>
         );
+
       case 3:
         return (
-          <Card className="rounded-3xl shadow-lg border-none">
-            <CardHeader><CardTitle>Student Records & Event Analysis</CardTitle></CardHeader>
-            <CardContent className="space-y-4">
-              {studentRecords.map((s) => (
-                <div key={s.name} className="rounded-2xl border p-4 text-white">
-                  <div><b>Name:</b> {s.name}</div>
-                  <div><b>Age:</b> {s.age}</div>
-                  <div><b>Grades:</b> {s.grades.join(", ")}</div>
-                </div>
-              ))}
-              <div className="rounded-2xl bg-slate-800 p-4 text-sm text-black border border-white/10">
-  <span className="text-white">
-    Common participants: Rahul, Anita
-  </span>
-  <br />
-  <span className="text-white">
-    All participants: Priya, Rahul, Anita, Kiran, Sneha
-  </span>
-</div>
-            </CardContent>
-          </Card>
-        );
-      case 4:
-        return (
-          <Card className="rounded-3xl shadow-lg border-none">
-            <CardHeader><CardTitle>Sorting & Searching</CardTitle></CardHeader>
-            <CardContent className="space-y-4">
-              <div className="rounded-2xl bg-slate-50 p-4 text-black"><b>Sorted IDs:</b> {sortedIds.join(", ")}</div>
-              <Input type="number" value={searchId} onChange={(e) => setSearchId(e.target.value)} placeholder="Search ID" />
-              <div className="grid gap-3 md:grid-cols-2 text-sm">
-                <div className="rounded-2xl border p-4">Linear search: {linearFound >= 0 ? `Found at index ${linearFound}` : "Not found"}</div>
-                <div className="rounded-2xl border p-4">Binary search: {binaryFound >= 0 ? `Found at index ${binaryFound}` : "Not found"}</div>
+          <div className="content-card">
+            <h2>Student Records & Event Analysis</h2>
+
+            {studentRecords.map((s, index) => (
+              <div className="dark-box" key={index}>
+                <p>Name: {s.name}</p>
+                <p>Age: {s.age}</p>
+                <p>Grades: {s.grades.join(", ")}</p>
               </div>
-            </CardContent>
-          </Card>
+            ))}
+
+            <div className="output-box black-text">
+  <p>Common Participants: Rahul, Anita</p>
+  <p>
+    All Participants: Priya, Rahul, Anita, Kiran,
+    Sneha
+  </p>
+</div>
+
+<div className="output-box black-text">
+  <p>
+    Participants only in Event A:
+    Priya, Kiran
+  </p>
+</div>
+
+<div className="output-box black-text">
+  <p>
+    Participants only in Event B:
+    Sneha
+  </p>
+</div>
+          </div>
         );
+
+      case 4:
+  return (
+    <div className="content-card">
+      <h2>Sorting & Searching Student IDs</h2>
+
+      <div className="dark-box">
+        <p>Original IDs: 105, 102, 110, 108, 101, 115</p>
+      </div>
+
+      <div className="dark-box">
+        <p>
+          Sorted IDs (Bubble Sort):{" "}
+          {sortedIds.join(", ")}
+        </p>
+      </div>
+
+      <div className="dark-box">
+        <p>
+          Sorted IDs (Selection Sort):{" "}
+          {sortedIds.join(", ")}
+        </p>
+      </div>
+
+      <input
+        value={searchId}
+        onChange={(e) => setSearchId(e.target.value)}
+        type="number"
+        placeholder="Enter Student ID"
+      />
+
+      <div className="output-box black-text">
+        {linearFound !== -1 ? (
+          <p>
+            Linear Search: ID {searchId} found at
+            index {linearFound}
+          </p>
+        ) : (
+          <p>Linear Search: ID not found</p>
+        )}
+      </div>
+
+      <div className="output-box black-text">
+        {linearFound !== -1 ? (
+          <p>
+            Binary Search: ID {searchId} found at
+            index {linearFound}
+          </p>
+        ) : (
+          <p>Binary Search: ID not found</p>
+        )}
+      </div>
+    </div>
+  );
+       
+
       case 5:
         return (
-          <Card className="rounded-3xl shadow-lg border-none">
-            <CardHeader><CardTitle>Fee Calculator</CardTitle></CardHeader>
-            <CardContent className="grid gap-4 md:grid-cols-3">
-              <Input type="number" value={tuition} onChange={(e) => setTuition(e.target.value)} placeholder="Tuition" />
-              <Input type="number" value={hostel} onChange={(e) => setHostel(e.target.value)} placeholder="Hostel" />
-              <Input type="number" value={transport} onChange={(e) => setTransport(e.target.value)} placeholder="Transport" />
-              <div className="md:col-span-3 rounded-2xl bg-slate-50 p-4 text-black">
-                <b>Total fee:</b> {feeTotal}
-              </div>
-            </CardContent>
-          </Card>
+          <div className="content-card">
+            <h2>Fee Calculation using Functions</h2>
+
+            <input
+  value={tuition}
+  onChange={(e) => setTuition(e.target.value)}
+  type="number"
+  placeholder="Enter Tuition Fee"
+/>
+
+<input
+  value={hostel}
+  onChange={(e) => setHostel(e.target.value)}
+  type="number"
+  placeholder="Enter Hostel Fee"
+/>
+
+<input
+  value={transport}
+  onChange={(e) => setTransport(e.target.value)}
+  type="number"
+  placeholder="Enter Transport Fee"
+/>
+
+            <div className="output-box black-text">
+  <p>Tuition Fee: ₹{tuition}</p>
+  <p>Hostel Fee: ₹{hostel}</p>
+  <p>Transport Fee: ₹{transport}</p>
+</div>
+
+<div className="output-box black-text">
+  <p>
+    Total Fee (Tuition Only):
+    ₹{Number(tuition)}
+  </p>
+</div>
+
+<div className="output-box black-text">
+  <p>
+    Total Fee (Tuition + Hostel):
+    ₹{Number(tuition) + Number(hostel)}
+  </p>
+</div>
+
+<div className="output-box black-text">
+  <p>
+    Total Fee (Tuition + Hostel + Transport):
+    ₹
+    {Number(tuition) +
+      Number(hostel) +
+      Number(transport)}
+  </p>
+</div>
+          </div>
         );
+
       case 6:
         return (
-          <Card className="rounded-3xl shadow-lg border-white">
-            <CardHeader><CardTitle>File Records Summary</CardTitle></CardHeader>
-            <CardContent className="space-y-3 text-white">
-              <div className="rounded-2xl border p-4 text-white">ID, Name, Marks</div>
-              <div className="rounded-2xl border p-4 text-white">101, Arjun, 85</div>
-              <div className="rounded-2xl border p-4 text-white">102, Meera, 92</div>
-              <div className="rounded-2xl border p-4 text-white">103, Ravi, 76</div>
-              <div className="rounded-2xl bg-slate-50 p-4 text-black">
-                Total Students: 4<br />Average Marks: 85.5<br />Top Student: Meera
-              </div>
-            </CardContent>
-          </Card>
+          <div className="content-card">
+            <h2>File Records Summary</h2>
+
+            <div className="dark-box">
+              ID, Name, Marks
+            </div>
+
+            <div className="dark-box">
+              101, Arjun, 85
+            </div>
+
+            <div className="dark-box">
+              102, Meera, 92
+            </div>
+
+            <div className="dark-box">
+              103, Ravi, 76
+            </div>
+
+            <div className="output-box black-text">
+              <p>Total Students: 4</p>
+              <p>Average Marks: 85.5</p>
+              <p>Top Student: Meera (92 marks)</p>
+            </div>
+          </div>
         );
+
       case 7:
-        return (
-          <Card className="rounded-3xl shadow-lg border-none">
-            <CardHeader><CardTitle>Directory Scanner</CardTitle></CardHeader>
-            <CardContent className="space-y-3 text-black">
-              <Input placeholder="Enter directory path" defaultValue="Projects/" />
-              <div className="rounded-2xl border p-4 text-white font-mono whitespace-pre-line">Projects/\n  Student1/\n    report.docx\n  Student2/\n    code.py\n  EmptyFolder/ text-white</div>
-              <div className="rounded-2xl bg-red-50 p-4">Custom Error: Empty folder detected: Projects/EmptyFolder</div>
-            </CardContent>
-          </Card>
-        );
+  return (
+    <div className="content-card">
+      <h2>
+        Directory Scanning with Exception Handling
+      </h2>
+
+      <div className="dark-box">
+        <p>
+          Implement a Python program that scans a
+          directory containing student project files
+          and displays the folder structure.
+        </p>
+      </div>
+
+      <div className="output-box black-text">
+        <p>Sample Output</p>
+
+        <br />
+
+        <p>Scanning directory: Projects</p>
+
+        <br />
+
+        <p>Projects/</p>
+
+        <p>
+          &nbsp;&nbsp;&nbsp;&nbsp;Student1/
+        </p>
+
+        <p>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;report.docx
+        </p>
+
+        <p>
+          &nbsp;&nbsp;&nbsp;&nbsp;Student2/
+        </p>
+
+        <p>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;code.py
+        </p>
+
+        <p>
+          &nbsp;&nbsp;&nbsp;&nbsp;EmptyFolder/
+        </p>
+
+        <br />
+
+        <p>
+          Custom Error: Empty folder detected:
+          Projects/EmptyFolder
+        </p>
+      </div>
+
+      <div className="output-box black-text">
+        <p>
+          Exception Handling:
+          FileNotFoundError
+        </p>
+
+        <p>
+          User Defined Exception:
+          MissingFileOrFolderError
+        </p>
+      </div>
+    </div>
+  );
+
       case 8:
-        return (
-          <Card className="rounded-3xl shadow-lg border-none">
-            <CardHeader><CardTitle>Performance Analytics</CardTitle></CardHeader>
-            <CardContent className="space-y-3 text-white">
-              <div className="rounded-2xl border p-4 text-white">Mean scores: Math 84, Science 89, English 86</div>
-              <div className="rounded-2xl border p-4 text-white">Top performers: Math - Anita, Science - Anita, English - Anita</div>
-              <div className="rounded-2xl bg-slate-50 p-4 text-black">Charts can be added here using a chart library like Recharts or Chart.js.</div>
-            </CardContent>
-          </Card>
-        );
+  return (
+    <div className="content-card">
+      <h2>Performance Analytics</h2>
+
+      <div className="dark-box">
+        <p>
+          Pandas → Reads CSV and provides
+          statistical summaries.
+        </p>
+
+        <p>
+          NumPy → Computes mean, median and
+          standard deviation.
+        </p>
+
+        <p>
+          Matplotlib → Creates charts for
+          student performance analysis.
+        </p>
+      </div>
+
+      <div className="output-box black-text">
+        <p>--- Statistical Summary ---</p>
+
+        <br />
+
+        <p>
+          Mean Scores (Math, Science, English):
+          [84 89 86]
+        </p>
+
+        <p>
+          Median Scores (Math, Science,
+          English): [85 89 88]
+        </p>
+
+        <p>
+          Standard Deviation (Math, Science,
+          English): [8 6 7]
+        </p>
+      </div>
+
+      <div className="output-box black-text">
+        <p>--- Top Performers ---</p>
+
+        <br />
+
+        <p>Math: Anita</p>
+        <p>Science: Anita</p>
+        <p>English: Anita</p>
+      </div>
+
+      <div className="dark-box">
+        <p>Charts Generated:</p>
+
+        <br />
+
+        <p>
+          • Average Scores per Subject
+        </p>
+
+        <p>
+          • Student-wise Performance
+          Comparison
+        </p>
+      </div>
+      <div className="output-box black-text">
+  <h3>Average Scores per Subject</h3>
+
+  <div
+    style={{
+      display: "flex",
+      alignItems: "flex-end",
+      gap: "30px",
+      height: "250px",
+      marginTop: "20px",
+    }}
+  >
+    <div>
+      <div
+        style={{
+          width: "70px",
+          height: "168px",
+          background: "blue",
+          borderRadius: "10px",
+        }}
+      ></div>
+      <p>Math</p>
+    </div>
+
+    <div>
+      <div
+        style={{
+          width: "70px",
+          height: "178px",
+          background: "green",
+          borderRadius: "10px",
+        }}
+      ></div>
+      <p>Science</p>
+    </div>
+
+    <div>
+      <div
+        style={{
+          width: "70px",
+          height: "172px",
+          background: "orange",
+          borderRadius: "10px",
+        }}
+      ></div>
+      <p>English</p>
+    </div>
+  </div>
+</div>
+    </div>
+  );
+
       case 9:
         return (
-          <Card className="rounded-3xl shadow-lg border-none">
-            <CardHeader><CardTitle>Smart Campus Integration</CardTitle></CardHeader>
-            <CardContent className="space-y-3 ">
-              <div className="rounded-2xl border p-4 ">All 8 lab modules are linked from one dashboard.</div>
-              <div className="rounded-2xl border p-4 ">Choose any program from the left panel and run it instantly.</div>
-              <div className="rounded-2xl border p-4 ">This is ideal for class presentation and mini-project demo.</div>
-            </CardContent>
-          </Card>
+          <div className="content-card">
+            <h2>Smart Campus Integration</h2>
+
+            <div className="dark-box">
+              <p>
+                All 8 lab modules are linked from one dashboard.
+              </p>
+            </div>
+
+            <div className="dark-box">
+              <p>
+                Choose any program from the left panel and run
+                it instantly.
+              </p>
+            </div>
+
+            <div className="dark-box">
+              <p>
+                This is ideal for class presentation and
+                mini-project demo.
+              </p>
+            </div>
+          </div>
         );
-      default:
+
+      case 10:
         return (
-          <Card className="rounded-3xl shadow-lg border-none">
-            <CardHeader><CardTitle>Project Guide</CardTitle></CardHeader>
-            <CardContent className="space-y-3 text-sm">
-              <div className="rounded-2xl border p-4">Use this as a homepage for your Python lab website.</div>
-              <div className="rounded-2xl border p-4">Each program can open in a separate section or page.</div>
-              <div className="rounded-2xl border p-4">You can later connect real Python backend code using Flask or Django.</div>
-            </CardContent>
-          </Card>
+          <div className="content-card">
+            <h2>Project Guide</h2>
+
+            <div className="dark-box">
+              <p>Frontend: React + CSS</p>
+              <p>Backend: Python Flask</p>
+              <p>Database: TXT / JSON</p>
+            </div>
+
+            <div className="output-box black-text">
+              <p>Mini Project Ready</p>
+            </div>
+          </div>
         );
+
+      default:
+        return null;
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 text-white">
-      <div className="mx-auto max-w-7xl px-4 py-6 md:px-8">
-        <div className="mb-6 rounded-[2rem] border border-white/10 bg-white/5 p-6 shadow-2xl backdrop-blur">
-          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-            <div>
-              <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs text-white/80">
-                <Sparkles className="h-3.5 w-3.5" /> Smart Campus Python Lab
-              </div>
-              <h1 className="text-3xl font-bold md:text-5xl">Interactive Python Programs Website</h1>
-              <p className="mt-2 max-w-2xl text-sm text-white/70 md:text-base">
-                A clean dashboard where the user chooses a program, fills inputs, and sees the output instantly.
-              </p>
-            </div>
-            <div className="flex items-center gap-3">
-              <Badge className="rounded-full px-3 py-1">10 Programs</Badge>
-              <Badge variant="secondary" className="rounded-full px-3 py-1 text-slate-900">Interactive Demo</Badge>
-            </div>
-          </div>
+    <div className="app">
+      <div className="hero-section">
+        <div>
+          <h1>Interactive Python Programs Website</h1>
+
+          <p>
+            A clean dashboard where the user chooses a
+            program, fills inputs, and sees the output
+            instantly.
+          </p>
         </div>
 
-        <div className="grid gap-6 lg:grid-cols-[360px_1fr]">
-          <Card className="rounded-[2rem] border-white/10 bg-white/5 text-white shadow-2xl backdrop-blur">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-white">
-                <ChevronRight className="h-5 w-5" /> Program Menu
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              {modules.map((m) => {
-                const Icon = m.icon;
-                const active = selected === m.id;
-                return (
-                  <button
-                    key={m.id}
-                    onClick={() => setSelected(m.id)}
-                    className={`w-full rounded-2xl border p-4 text-left transition ${active ? "border-white/30 bg-white/15" : "border-white/10 bg-white/5 hover:bg-white/10"}`}
-                  >
-                    <div className="flex items-start gap-3">
-                      <div className={`rounded-2xl bg-gradient-to-br ${m.color} p-3 text-white shadow-lg`}>
-                        <Icon className="h-5 w-5" />
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <div className="font-semibold leading-tight text-white">{m.title}</div>
-                        <div className="mt-1 text-xs text-white/65">{m.summary}</div>
-                      </div>
-                      {active && <CircleCheck className="mt-1 h-5 w-5 text-emerald-300" />}
-                    </div>
-                  </button>
-                );
-              })}
-            </CardContent>
-          </Card>
+        <div className="hero-badges">
+          <span>10 Programs</span>
+          <span>Interactive Demo</span>
+        </div>
+      </div>
 
-          <div className="space-y-6">
-        <div>
-  {renderModule()}
-</div>
+      <div className="main-layout">
+        <div className="sidebar">
+          <h2>Program Menu</h2>
 
-            <Card className="rounded-[2rem] border-white/10 bg-white/5 text-white shadow-2xl backdrop-blur">
-              <CardContent className="p-6">
-                <div className="grid gap-4 md:grid-cols-3">
-                  <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                    <div className="text-sm text-white/60">Frontend</div>
-                    <div className="mt-1 font-semibold">React + Tailwind</div>
-                  </div>
-                  <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                    <div className="text-sm text-white/60">Backend</div>
-                    <div className="mt-1 font-semibold">Python Flask / Django</div>
-                  </div>
-                  <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                    <div className="text-sm text-white/60">Database / Files</div>
-                    <div className="mt-1 font-semibold">JSON, CSV, TXT</div>
-                  </div>
-                </div>
-                <Separator className="my-6 bg-white/10" />
-                <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-                  <div>
-                    <div className="text-lg font-semibold">Best way to present this project</div>
-                    <p className="text-sm text-white/65">
-                      Make the homepage a dashboard, then link every program to its own section or page.
-                    </p>
-                  </div>
-                  <Button className="rounded-2xl">
-                    <ArrowRight className="mr-2 h-4 w-4" /> Open Selected Program
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+          {[
+            "Student Registration & Grade Evaluation",
+            "Course Enrollment Management",
+            "Student Record Management",
+            "Sorting & Searching Student IDs",
+            "Fee Calculation using Functions",
+            "File Handling for Academic Records",
+            "Directory Scanning & Exceptions",
+            "Performance Analytics",
+            "Smart Campus Integration",
+            "Project Guide Page",
+          ].map((item, index) => (
+            <div
+              key={index}
+              className={`menu-card ${
+                selected === index + 1 ? "active-card" : ""
+              }`}
+              onClick={() => setSelected(index + 1)}
+            >
+              <h3>{item}</h3>
+            </div>
+          ))}
+        </div>
+
+        <div className="content-section">
+          {renderModule()}
         </div>
       </div>
     </div>
