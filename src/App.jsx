@@ -619,13 +619,12 @@ export default function App() {
     <div className="app">
       <div className="hero-section">
         <div>
-          <h1>Interactive Python Programs Website</h1>
+          <h1>SMART CAMPUS WEBSITE</h1>
 
           <p>
-            A clean dashboard where the user chooses a
-            program, fills inputs, and sees the output
-            instantly.
-          </p>
+  Smart Campus Information System using
+  Python, React and Flask Integration.
+</p>
         </div>
 
         <div className="hero-badges">
