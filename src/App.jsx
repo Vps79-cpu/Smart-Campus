@@ -114,6 +114,19 @@ function Home() {
           </div>
         </Link>
       </div>
+      <div
+  style={{
+    position: "fixed",
+    bottom: "20px",
+    right: "20px",
+    textAlign: "right",
+    color: "black",
+    fontWeight: "bold",
+  }}
+>
+  <p>Vaishnavi 59</p>
+  <p>Vedant 60</p>
+</div>
     </div>
   );
 }
