@@ -116,9 +116,8 @@ function Home() {
       </div>
       <div
   style={{
-    position: "fixed",
-    bottom: "20px",
-    right: "20px",
+    marginTop: "40px",
+textAlign: "right",
     textAlign: "right",
     color: "black",
     fontWeight: "bold",
